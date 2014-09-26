@@ -2,6 +2,7 @@
 //	functions to read JSON from Trello Board 
 //		and reorganize for ease of traversing for printing
 
+
 var DB = {};
 var JS = window;
 

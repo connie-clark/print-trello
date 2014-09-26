@@ -1,5 +1,6 @@
 // pref.js - functions to import/show/save/export printing preferences
 
+
 function initPref()
 {
 	prefCard == null;

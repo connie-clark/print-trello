@@ -15,7 +15,6 @@
 //				T K B
 //
 //   <http://www.attacklab.net/>
-//
 
 //
 // Wherever possible, Showdown is a straight, line-by-line port

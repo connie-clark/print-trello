@@ -2,6 +2,7 @@
 //	functions to create the output for printing
 
 
+
 function dpyTrello()
 {
 	SD = new Showdown.converter();
