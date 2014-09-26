@@ -1,0 +1,40 @@
+<title>About Trello Print Utility</title>
+
+<h3>Background</h3>
+<p>In spring 2014, I was part of a team that used Trello to collect brainstorming ideas.  We had a LOT of ideas to go through, so I created a simple program to number all the cards by list and position within the list so we could easily reference 3.7 during our discussions (we all had paper copies).
+
+<p>A bit later, I was experimenting with using Trello for my 'grocery list' for major shopping trips - and needed a few more features, so the program grew ...
+Specifically, I sometimes print the list out in 'inventory' mode - where all checklist items are shown.  Then just before my trip I print it out in 'grocery' mode - where only the checked items are shown - but preceded by a ___ so they can be checked off in the grocery store.
+
+<h3>Options</h3>
+<p>You can control:
+<ul>
+<li>are card descriptions shown
+<li>are card labels shown, and how
+<li>are votes shown
+<li>are due dates shown
+<li>are checklists shown, and how - all items, just checked items, just unchecked items
+<li>are comments shown
+<li>showing live links to other cards.  
+(Original Trello howto 
+<a href=https://trello.com/c/sSldoiVf>https://trello.com/c/sSldoiVf</a>
+)
+In Trello - when you put #105 on a card, it becomes a link to card.105 on that board.  In the print - it becomes a link that will show card 105 immediately below the contents of the current card.  There is also an 'expanded' option when printing one list - that will show all these cross-references inline.
+t to linki to card 105, just put #105.  There is a printing option as well to actually expand these cross references as 'footnotes' under the original card.
+</ul>
+</p>
+
+<p>Once the printable version (HTML) is created, 
+you can choose to print any single list by itself.
+
+<h3>Saving Printing Preferences</h3>
+<p>
+Whenever you click to print, the current preferences are converted to JSON and shown in a textbox.
+<p>
+To save them -- create a card anywhere in your trello board.  It must be names:
+<b>MY~PRINT~PREFERENCES</b>
+<p>Then copy/paste the preferences-json into a comment on the card, and edit the nickname field to be something meaningful to you.
+<p>The next time you export the board's json for printing, these preference values will be picked up and used.
+<p>If you have multiple preferences saved, you will have the option to choose among them.
+
+

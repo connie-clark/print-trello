@@ -1,0 +1,64 @@
+<head>
+<title>Print Trello Lists/Cards/...</title>
+
+<link rel=stylesheet type=text/css href=style.css></link>
+
+<script src=board.js?q=8></script>
+<script src=pref.js?q=8></script>
+<script src=layout.js?q=8></script>
+<script src=showdown.js></script>
+
+</head>
+<body>
+<div id=HOWTO class=noprint>
+<div align=right><a href=about.htm>about ...</a></div>
+<p>
+This page will give you a printable copy of your Trello Board, lists - cards - labels - desc - comments - votes. This is helpful even when you just want to be able to scan quickly, without having to turn each card over.
+<p>
+You may safely use this for private/proprietary data
+as no information leaves this browser page.
+</p>
+<fieldset><legend>Step.1 - Import your Trello Board contents</legend>
+<ol>
+<li>in another window or tab, access your Trello Board
+<li>click show sidebar (top-right)
+<li>right sidebar -> Menu -> Share,Print,Export -> Export JSON
+<li>after the new JSON data appears, use Ctrl-A, Ctrl-C to copy the entire page contents
+<li>use Ctrl-V to paste your Trello Board's JSON into this box:
+<br><textarea id=TA rows=2 cols=80 NOWRAP></textarea>
+<br><input type=button value='READY' onClick=step1()>
+</ol>
+</fieldset>
+
+
+
+<div id=prefDiv style='display:none'>
+<fieldset><legend>Step.2 - review/set your printing preferences</legend>
+
+<div id=PREF_FORM></div>
+
+<p></p>
+<div id=prefJsonDiv style='display:none'>
+<fieldset><legend>Saving your printing preferences</legend>
+You may save these printing preferences with your Trello board:
+<ul class=mini>
+<li>Create a card with title: 
+<script>document.write(prefCardTitle)</script>
+<li>Add the json below as a COMMENT, and change the nickname field to something meaningful to you.
+<textarea id=prefJsonOUT NOWRAP rows=2 cols=80></textarea>
+</ul>
+</fieldset>
+<p class=hilite>Note: when you print this page - only the report below will be printed</p>
+
+</div>
+
+</fieldset>
+</div>
+
+<hr>
+</div>	<!-- end of HOWTO -->
+
+<div id=MAIN>
+<!--report will go here-->
+</div>
+
