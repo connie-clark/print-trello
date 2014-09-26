@@ -5,4 +5,7 @@ This is helpful even when you just want to be able to scan quickly, without havi
 You may safely use this for private/proprietary data
 as all processing is client side - you paste in the JSON exported from your Trello board
 
+Try it out at
+   http://connie-clark.github.io/print-trello/
+
 
