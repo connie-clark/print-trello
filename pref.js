@@ -1,3 +1,4 @@
+
 // pref.js - functions to import/show/save/export printing preferences
 
 
@@ -159,7 +160,7 @@ function setPrefCard(obj)
 	for (var i=0; i<arr.length; i++){
 		try {
 			var obj = JSON.parse(arr[i].data.text);
-			prefCard.parseJson[i] = obj;
+			prefCard.parsedJson[i] = obj;
 		}
 		catch(e){
 			alert('error parsing json from '+prefCardTitle+' '+i 
@@ -294,4 +295,5 @@ function savePref(f)
 
 	dpyTrello();
 }
+
 
