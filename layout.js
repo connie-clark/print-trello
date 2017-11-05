@@ -254,6 +254,7 @@ function dpyWhoName(name)
 	var x = prefVal.showPersonAs;
 
 	if (x == 'none') return '';
+	if (x == 'do-not-show') return '';
 
 	var obj = DB.whoLookup[name];  // should be fullName
 
@@ -320,4 +321,5 @@ function printList(i,mode)
 	doc.close();
 	win.JS = window;
 }
+
 

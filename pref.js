@@ -134,7 +134,9 @@ var prefSpec = [
 		type: 'pulldown',
 		options: [
 			'initials',
-			'fullname'],
+			'fullname',
+			'do-not-show'
+			],
 		dflt: 'initials' }
 
 ];
