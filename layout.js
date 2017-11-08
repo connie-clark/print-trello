@@ -101,6 +101,8 @@ function dpyCard(cobj,cardId,mode)
 {
 	curr_cobj = cobj;		// need this for do_sub/...
 
+	if (cobj.name == prefCardTitle) return;
+
 	cobj.xrefArr = []; 
 
 	var htm = [];
