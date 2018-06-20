@@ -1,4 +1,3 @@
-
 // pref.js - functions to import/show/save/export printing preferences
 
 
@@ -70,11 +69,23 @@ var prefSpec = [
 		type: 'pulldown',
 		options: [
 			'do-not-show',
+			'plain-text',
 			'show-color-block',
 			'colored-text',
 			'text-in-colored-block'
 			],
 		dflt: 'colored-text' },
+
+
+  { key: 'showCardMembers', 
+		name: 'Show Card Members',
+		type: 'pulldown',
+		options: [
+			'do-not-show',
+			'show-initials',
+			'show-fullnames'
+			],
+		dflt: 'do-not-show' },
 
   { key: 'showVoteCount', 
 		name: 'Show vote count',
@@ -126,6 +137,10 @@ var prefSpec = [
   { key: 'showCommentCreator', 
 		name: 'Show Comment Creator',
 		dflt: true },
+
+  { key: 'showCommentDate', 
+		name: 'Show Comment Date',
+		dflt: false },
 			
   { type: 'fieldset', name: 'People' },
 
@@ -137,7 +152,13 @@ var prefSpec = [
 			'fullname',
 			'do-not-show'
 			],
-		dflt: 'initials' }
+		dflt: 'initials' },
+
+  { key: 'skipCreatorBefore',
+		name: 'Skip names for entries before yyyy-mm-dd', 
+		type: 'text',
+		dflt: '' }
+		
 
 ];
 
@@ -190,7 +211,7 @@ function showPrefForm()
 
 	if (prefCard){
 		var arr = prefCard.parsedJson;
-		var htm = ['Saved preferences from ' +prefCardTitle+ ' card'];
+		var htm = ['Saved preferences from ' +prefCardTitle+ ' card: '];
 		var cnt = 0;
 		for (var i=0; i<arr.length; i++){
 			var obj = arr[i];
@@ -254,6 +275,11 @@ function showPrefForm()
 			}
 			htm.push('</select>');
 		}
+
+		if (obj.type == 'text'){
+			htm.push('<p> &nbsp; ',obj.name, 
+				' <input type=text name=',x, ' value="', dflt,  '">');
+		}
 	}
 	htm.push(fsprev);
 	htm.push('<input type=button onClick=savePref(this.form) value=" Save Preferences & Create the Report">');
@@ -286,6 +312,10 @@ function savePref(f)
 			var indx = f[x].selectedIndex;
 			prefVal[x] = opts[indx].value;
 		}
+
+		if (obj.type == 'text'){
+			prefVal[x] = f[x].value; continue;
+		}
 	}
 //console.log(prefVal);
 
@@ -297,5 +327,4 @@ function savePref(f)
 
 	dpyTrello();
 }
-
 
