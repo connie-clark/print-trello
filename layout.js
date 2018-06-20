@@ -14,9 +14,11 @@ function dpyTrello()
 	var dt = dtObj.toLocaleString();
 
 	if (prefVal.showBoardTitle)
-	htm.push('<h2>', DB.raw.name, 
+	htm.push('<h2 style="margin-top: 5px">', DB.raw.name, 
 		'<span class=asof> - last activity - ', dt, '</span>',
 		'</h2>');
+
+	if (prefVal.numberCardsInList) htm.push('<div class=hilite>Note that card numbering within list will change whenever cards are moved at Trello - so you can not use them as permanent identifiers - but they are very helpful when doing a review of the boards content - where everyone is looking at paper or a pdf from the same Trello snapshot</div>');
 
 	var larr = DB.listArr;
 	for (var i=0; i<larr.length; i++){
@@ -59,9 +61,9 @@ function dpyList(i,mode,showPrintHref)
 
 	        if (showPrintHref && prefVal.showSingleList) htm.push(
 		'&nbsp; &nbsp; &nbsp;<span class=small-menu>',
-		'<a href=javascript:JS.printList(',i,',0)>print just this list</a>',
-		' : ',
-		'<a href=javascript:JS.printList(',i,',1)>print just this list expanded</a>',
+		'<a class=noprint href=javascript:JS.printList(',i,',0)>print just this list</a>',
+		'<span class=noprint> : </span>',
+		'<a class=noprint href=javascript:JS.printList(',i,',1)>print just this list expanded</a>',
 		'</span>'
 		); 
 
@@ -115,19 +117,29 @@ function dpyCard(cobj,cardId,mode)
 	    if (prefVal.showCardNumber)
 	    	htm.push(' (#', cobj.idShort,')');
 
-	    if (cobj.who) htm.push( dpyWhoName(cobj.who) );
-	    else if (cobj.whox) htm.push( ' (', cobj.whox, ')');
+//console.log('card', cobj.idShort, '  ', typeof cobj.date, cobj.date, 'vs', prefVal.skipCreatorBefore);
+
+	    if (prefVal.showCardCreator && cobj.date > prefVal.skipCreatorBefore){
+	    	if (cobj.who) htm.push( dpyWhoName(cobj.who) );
+	    	else if (cobj.whox) htm.push( ' (', cobj.whox, ')');
+	    }
         }
 
 	// -- show any labels
 	var x = prefVal.showCardLabels;
-        if (x != 'none') {
-	   var tmp = cobj.labels;
-	   var x = prefVal.showCardLabels;
+	var tmp = cobj.labels;
+        if (x != 'none' && tmp.length > 0) {
+	   var d = '';
+	   if (x == 'plain-text') htm.push(' ['); else htm.push(' ');
+
 	   for (var k=0; k<tmp.length; k++){
 		var kobj = cobj.labels[k];
-		htm.push(' ');
-		if (x == 'show-color-block'){
+		htm.push(d);
+		if (x == 'plain-text'){
+			htm.push('<i>',kobj.name,'</i>');
+			d = ', ';
+		}
+		else if (x == 'show-color-block'){
 			htm.push('<span style="background:',kobj.color,'">&nbsp;&nbsp;&nbsp;</span>');
 		}
 		else if (x == 'colored-text'){
@@ -135,6 +147,25 @@ function dpyCard(cobj,cardId,mode)
 		}
 		else htm.push('<span style="background:',kobj.color,'">',kobj.name,'</span>');
 	   }
+	   if (x == 'plain-text') htm.push(']'); 
+	}
+
+	// -- show members
+	var x = prefVal.showCardMembers;
+	var varr = cobj.idMembers;
+	if (x != 'do-not-show' && varr.length) {
+		htm.push('<p>Members: ');
+		var narr = [];  // array for member names
+		for (var ix=0; ix<varr.length; ix++){
+			var id = varr[ix];
+			var who = DB.whoLookup[id];
+//console.log(ix, who);
+			if (x == 'show-initials') name=who.initials;
+			else name = who.fullName;
+			narr.push(name);
+		}
+		htm.push(narr.join(', '));
+			
 	}
 
 	// -- show votes
@@ -180,8 +211,17 @@ function dpyCard(cobj,cardId,mode)
 	  for (var k=0; k<marr.length; k++){
 
 		//console.log('comment.', k, marr[k]);
-		var buf = marr[k].data.text + 
-		     dpyWhoName(marr[k].memberCreator.fullName);
+		var buf = marr[k].data.text + ' ';
+
+//console.log('comment',k , '  ', typeof marr[k].date, marr[k].date, 'vs', prefVal.skipCreatorBefore);
+		if (prefVal.showCommentCreator
+			&& marr[k].date > prefVal.skipCreatorBefore){ 
+				buf += ' ' + dpyWhoName(marr[k].memberCreator.fullName);
+		}
+
+		if (prefVal.showCommentDate) buf += ' ' +
+			marr[k].date.replace(/T.*$/,'');
+
 		htm.push('<li><i>', do_sub(buf), '</i>'); 
 	  }
 	  htm.push('</ul>');
@@ -257,6 +297,7 @@ function dpyWhoName(name)
 
 	if (x == 'none') return '';
 	if (x == 'do-not-show') return '';
+	if (name == 'anon') return '';
 
 	var obj = DB.whoLookup[name];  // should be fullName
 
@@ -323,5 +364,4 @@ function printList(i,mode)
 	doc.close();
 	win.JS = window;
 }
-
 
