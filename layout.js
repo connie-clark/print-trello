@@ -42,7 +42,7 @@ function dpyList(i,mode,showPrintHref)
 	if (lobj.closed && !prefVal.showClosedLists ) return;
 
 	var pb = '';
-	if (i>0) pb = " style='page-break-before:always' ";
+	if (prefVal.startListOnNewPage) pb = " style='page-break-before:always' ";
 
 	var x = prefVal.showListTitle;
 	if (x){ 
